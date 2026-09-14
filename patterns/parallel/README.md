@@ -6,6 +6,8 @@ Execute multiple independent verification tasks in parallel on the same input, t
 
 ## Implementation
 
+See `security_checks.py` for complete implementation.
+
 Security check workflow using LangGraph state machine:
 1. **Parallel execution** from START → 3 independent security checks run simultaneously
 2. **Check nodes** (3 LLM calls in parallel):

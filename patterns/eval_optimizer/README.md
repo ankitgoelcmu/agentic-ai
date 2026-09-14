@@ -6,6 +6,8 @@ Generate output, evaluate against criteria, then iterate with feedback until qua
 
 ## Implementation
 
+See `stock_analysis_optimizer.py` for complete implementation.
+
 Iterative stock analysis generation and evaluation:
 
 1. **Generator node** (`stock_analysis_generator`):

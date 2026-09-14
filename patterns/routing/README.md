@@ -6,6 +6,8 @@ Classify incoming requests and route them to specialized handlers using LLM-base
 
 ## Implementation
 
+See `department_router.py` for complete implementation.
+
 Multi-department routing workflow:
 1. **Classifier node** (`llm_call_router`): 
    - Uses LLM with structured output (Pydantic `Route` schema)

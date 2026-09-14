@@ -6,6 +6,8 @@ Break down a complex task into sequential steps where each step's output becomes
 
 ## Implementation
 
+See `design_to_code.py` for complete implementation.
+
 Software design generation workflow with 3 chained LLM calls:
 
 1. **Generate HLD** (High-Level Design)
