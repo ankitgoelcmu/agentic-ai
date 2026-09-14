@@ -4,8 +4,12 @@ Add your own agentic AI patterns and examples to this repository.
 
 ## Before You Start
 
-1. Read Anthropic's "Building Effective Agents" blog post: https://www.anthropic.com/engineering/building-effective-agents
-2. Understand which pattern category your idea fits into:
+1. **Watch & Read Learning Resources** (required)
+   - YouTube: Agentic AI Design Patterns: https://www.youtube.com/watch?v=aHCDrAbH_go
+   - Blog: Anthropic's "Building Effective Agents": https://www.anthropic.com/engineering/building-effective-agents
+   - See `docs/learning-resources.md` for complete learning path
+
+2. **Understand which pattern category your idea fits into:**
    - **Pattern**: Reusable, abstract pattern (parallel, routing, prompt_chaining, eval_optimizer, worker_orchestrator)
    - **Example**: Real-world use case (sigma_rule_writer, etc.)
 

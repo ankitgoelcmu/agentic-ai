@@ -76,9 +76,28 @@ See `pyproject.toml` for full dependency list.
 
 ## Documentation
 
+- `QUICKSTART.md` - Get running in 5 minutes
+- `docs/setup.md` - Ollama installation and configuration
+- `docs/contributing.md` - Contribution guidelines
+- `docs/learning-resources.md` - Learning path and references
 - `docs/patterns-guide.md` - Detailed explanation of each pattern
 - `docs/architecture.md` - System architecture and design decisions
-- `docs/contributing.md` - Contribution guidelines
+
+## References & Inspiration
+
+This repository's patterns and structure are based on:
+
+1. **Anthropic: Building Effective Agents**
+   - Blog: https://www.anthropic.com/engineering/building-effective-agents
+   - Covers core patterns: parallel, routing, prompt chaining, eval optimizer
+
+2. **Agentic AI Design Patterns (YouTube)**
+   - Video: https://www.youtube.com/watch?v=aHCDrAbH_go
+   - Covers system architecture and workflow design principles
+
+These resources provide the foundation for understanding and implementing effective agentic systems.
+
+For a comprehensive learning path, see `docs/learning-resources.md`.
 
 ## License
 
