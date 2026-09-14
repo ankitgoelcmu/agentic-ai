@@ -36,3 +36,7 @@ All three checks run in parallel against the same input, then results are combin
 - **Independent subtasks**: Only use parallelization when subtasks don't depend on each other
 - **Fan-in aggregation**: Results flow from parallel nodes into a single aggregation node
 - **Resource efficiency**: 3 checks that take 2s each run in ~2s total instead of 6s sequentially
+
+## Reference
+
+This pattern is based on [Anthropic's "Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents) blog post on parallelization strategies.

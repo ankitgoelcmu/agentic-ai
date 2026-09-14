@@ -2,6 +2,8 @@
 
 A comprehensive repository of agentic AI patterns and real-world examples using LangChain, DeepAgents, and other frameworks.
 
+All patterns are based on [Anthropic's "Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents) blog post.
+
 ## Structure
 
 ### `patterns/` - Core Agentic Patterns
@@ -10,6 +12,7 @@ Reusable, abstract patterns for building multi-agent systems:
 
 - **`parallel/`** - Parallel agent execution: Run multiple agents concurrently and aggregate results
 - **`routing/`** - Agent routing/dispatch: Route requests to specialized agents based on input
+- **`prompt_chaining/`** - Prompt chaining: Break complex tasks into sequential steps where each step's output feeds the next
 - **`eval_optimizer/`** - Evaluation & optimization: Evaluate agent outputs and iteratively improve
 - **`worker_orchestrator/`** - Distributed workers: Coordinate work across multiple worker agents
 

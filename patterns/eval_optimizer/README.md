@@ -55,3 +55,7 @@ INPUT (ticker) ──→ stock_analysis_generator
 - **Feedback loop design**: Evaluator feedback must be actionable for the generator
 - **Iteration limits**: Consider max iterations to prevent runaway loops
 - **Quality over speed**: Trading longer execution for higher-quality output
+
+## Reference
+
+This pattern is based on [Anthropic's "Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents) blog post on agentic loops and evaluation strategies.

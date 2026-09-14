@@ -47,3 +47,7 @@ Structured output ensures deterministic routing without parsing errors.
 - **Structured output**: Using Pydantic models prevents parsing errors and ensures valid routing decisions
 - **Single classification**: Each input routes to exactly ONE path (no multi-routing)
 - **Classification rules**: Clear, deterministic rules prevent misrouting ambiguous queries
+
+## Reference
+
+This pattern is based on [Anthropic's "Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents) blog post on routing strategies.

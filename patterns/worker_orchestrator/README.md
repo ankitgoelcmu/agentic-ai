@@ -70,3 +70,7 @@ for task in tasks:
 results = orchestrator.wait_and_collect()
 final = aggregate(results)
 ```
+
+## Reference
+
+This pattern is based on [Anthropic's "Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents) blog post on distributed task orchestration.
