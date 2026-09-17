@@ -334,5 +334,4 @@ level: high
 All 5 rules passed sigma_validate checks including:
 - YAML syntax validation
 - Sigma field taxonomy compliance
-- Sumo Logic CSE query conversion
 - Detection logic review
