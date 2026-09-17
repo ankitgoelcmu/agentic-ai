@@ -177,6 +177,20 @@ https://www.anthropic.com/threat-intelligence-report-september-2026
 
 Expected Output: Multiple Sigma rules, one for each distinct attack technique extracted from the report.
 
+## Real-World Example Output
+
+See `examples/threat_intelligence_report_sample.md` for a complete example:
+
+- **Input**: Threat intelligence URL describing September 2026 attack techniques
+- **Output**: 5 production-ready Sigma rules covering:
+  1. AI-driven malware staging and evasion
+  2. Device code phishing (Azure AD token theft)
+  3. ClickFix social engineering (Windows Run dialog)
+  4. WhatsApp account takeover automation
+  5. Microsoft 365 bulk email exfiltration
+- **Validation**: All rules pass sigma_validate and convert to Sumo Logic queries
+- **Attribution**: Real threat actors (Midnight Blizzard, Embassy Kit, Storm-2372)
+
 ## Output
 
 Valid YAML Sigma rules ready for:
