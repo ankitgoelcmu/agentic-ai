@@ -99,13 +99,21 @@ These resources provide the foundation for understanding and implementing effect
 
 For a comprehensive learning path, see `docs/learning-resources.md`.
 
-## Thought Leadership
+## Thought Leadership & Blog Posts
 
-See `docs/thought-leadership.md` for the author's Medium articles on:
-- **The Detection Gap**: Why AI-powered attacks outrun defenses, and how to close it
-- **What Actually Breaks**: Eight production failure modes in AI agents, with real examples from this project
+**Read the author's Medium articles that motivated this project:**
 
-These articles document the motivations behind this project and the hard lessons learned deploying agentic systems at scale.
+1. **The Detection Gap: Why AI-Powered Attacks Are Outrunning Our Defenses**
+   - Medium: https://ankitgoelcmu.medium.com/the-detection-gap-why-ai-powered-attacks-are-outrunning-our-defenses-and-how-im-closing-it-63b75e392def
+   - Problem: AI attacks evolve faster than detection rules can be written
+   - Solution: CyberGuard (sigma_rule_writer) automates rule generation from threat intelligence
+
+2. **What Actually Breaks When You Deploy an AI Agent**
+   - Medium: https://ankitgoelcmu.medium.com/what-actually-breaks-when-you-deploy-an-ai-agent-d8f2457e2d94
+   - Covers: 8 production failure modes encountered building this system
+   - Solutions: How middleware, validation, and bounded execution prevent failures
+
+**See `docs/thought-leadership.md`** for a comprehensive guide connecting these articles to the patterns and code in this repo.
 
 ## License
 
