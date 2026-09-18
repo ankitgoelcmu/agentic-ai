@@ -99,6 +99,14 @@ These resources provide the foundation for understanding and implementing effect
 
 For a comprehensive learning path, see `docs/learning-resources.md`.
 
+## Thought Leadership
+
+See `docs/thought-leadership.md` for the author's Medium articles on:
+- **The Detection Gap**: Why AI-powered attacks outrun defenses, and how to close it
+- **What Actually Breaks**: Eight production failure modes in AI agents, with real examples from this project
+
+These articles document the motivations behind this project and the hard lessons learned deploying agentic systems at scale.
+
 ## License
 
 MIT
