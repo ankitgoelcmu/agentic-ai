@@ -27,26 +27,23 @@ This is a production example of the **Worker-Orchestrator Pattern** from [Anthro
 - **Result**: Each worker gets its own isolated state and runs concurrently
 - **Speed Gain**: 5 workers × 10 seconds = 50 seconds serial → 10 seconds parallel = **5x faster**
 
-### 3. **Five Parallel Workers** (run at the same time)
+### 3. **Worker Node** (`worker_node` — one graph node, run 5x in parallel)
 
-Each worker follows the same pattern:
+There is only **one** worker node in the graph. LangGraph's `Send()` spawns 5 parallel *instances* of it — one per work order (Competitive, Financial, News, Bull, Bear). Each instance is isolated and runs this same function internally in 3 sub-steps:
 
-**Step 1: Tool Call** (deterministic data fetching)
-- Competitive Worker → calls `competetive_analysis(ticker)` → searches web
-- Financial Worker → calls `financial_analysis(ticker)` → searches web
-- News Worker → calls `news_sentiment_analysis(ticker)` → searches web
-- Bull Worker → calls `bull_case_analysis(ticker)` → searches web
-- Bear Worker → calls `bear_case_analysis(ticker)` → searches web
+1. **Call its tool** (deterministic data fetching)
+   e.g. the Financial instance calls `financial_analysis(ticker)` → raw search results (JSON)
 
-**Step 2: Specialist LLM Interpretation**
-- Raw search results → Specialist analyst LLM → Human-readable findings
-- Financial analyst extracts: revenue growth, margins, P/E ratio
-- Competitive analyst extracts: market share, rivals, advantages
-- Sentiment analyst extracts: overall tone, key themes, recent events
+2. **Interpret the results with an LLM** ← *this is inside the same node, not a separate node*
+   The raw JSON is passed to an LLM along with a role-specific system prompt (`WORKER_PROMPTS[worker_type]`), which turns it into 3-4 sentences of actual analysis:
+   - Financial instance's LLM call extracts: revenue growth, margins, P/E ratio
+   - Competitive instance's LLM call extracts: market share, rivals, advantages
+   - Sentiment instance's LLM call extracts: overall tone, key themes, recent events
 
-**Step 3: Return Result**
-- Each worker appends its findings to shared state (via `operator.add`)
-- No data loss, no overwriting
+3. **Return its finding**
+   Appends `{worker_type, findings}` to shared state (via `operator.add`) — no overwriting between the 5 parallel instances
+
+So "tool call → LLM interpretation → return" all happens **inside a single `worker_node` execution**, not across multiple graph nodes.
 
 ### 4. **Fan-In Merge**
 - LangGraph waits for all 5 workers to finish
