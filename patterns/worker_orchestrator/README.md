@@ -8,32 +8,9 @@ This is a production example of the **Worker-Orchestrator Pattern** from [Anthro
 
 ## How It Works
 
-```
-INPUT: Ticker (e.g., "NVDA") + Optional Query (e.g., "Bull case only")
-  │
-  ├─→ [1] ORCHESTRATOR (LLM)
-  │   Decides: What analysis tasks are needed?
-  │   Output: 3-5 work orders
-  │
-  ├─→ [2] DISPATCH (LangGraph Send)
-  │   Splits work into parallel branches
-  │
-  ├─→ [3] 5 PARALLEL WORKERS (run simultaneously)
-  │   ├─ Competitive Analysis Worker → searches + LLM interprets
-  │   ├─ Financial Analysis Worker → searches + LLM interprets
-  │   ├─ News & Sentiment Worker → searches + LLM interprets
-  │   ├─ Bull Case Worker → searches + LLM interprets
-  │   └─ Bear Case Worker → searches + LLM interprets
-  │   (Each: Tool call → Specialist LLM → Findings)
-  │
-  ├─→ [4] FAN-IN MERGE (LangGraph waits, combines results)
-  │   All 5 findings merged without data loss
-  │
-  ├─→ [5] SYNTHESIZER (LLM)
-  │   Reads all findings, writes final report
-  │
-  OUTPUT: Executive Summary + Investor Blog Post
-```
+![Stock Analyst Orchestrator-Workers Agent Architecture](images/architecture-diagram.png)
+
+**Flow**: Ticker → Orchestrator creates work orders → Dispatch sends them to 5 parallel workers → Each worker runs its tool + interprets results → Synthesizer combines everything into a final report.
 
 ---
 
