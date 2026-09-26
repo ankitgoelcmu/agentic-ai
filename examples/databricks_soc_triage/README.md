@@ -48,7 +48,7 @@ IPs are from the RFC 5737 documentation ranges and domains use `.example`, so no
 
 ## Running it
 
-1. In your Databricks workspace, go to Home, then ⋮ → Import → File, and upload `soc_triage_agent_lab.py`. It opens as a notebook with separate cells. (Importing into the top-level Workspace folder doesn't work, and pasting the file into one cell breaks the pip install step.)
+1. In your Databricks workspace, go to Home, then ⋮ → Import → File, and upload `soc_triage_agent.py`. It opens as a notebook with separate cells. (Importing into the top-level Workspace folder doesn't work, and pasting the file into one cell breaks the pip install step.)
 2. Attach serverless compute and Run all.
 
 The notebook checks which model endpoints your workspace can actually use and skips the rest, so there's nothing to configure. It took about 10 minutes for me.
@@ -90,6 +90,16 @@ Six alerts is a small set, so I'd read this as a working evaluation setup more t
 - Replace `find_past_incidents` with Vector Search over free-text incident reports
 - More alerts, plus MLflow LLM judges to score the reasoning and not just the verdict
 - Rerun on a trial workspace with Claude and Gemini
+
+## References
+
+These are the docs and posts I leaned on while building this:
+
+- [Integrate LangChain with Unity Catalog tools](https://docs.databricks.com/aws/en/agents/custom-agents/unity-catalog-tool-integration): how UC functions become agent tools
+- [Models supported by Foundation Model APIs](https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/supported-models): which models are available and on what terms
+- [MLflow Tracing on Databricks](https://docs.databricks.com/aws/mlflow/mlflow-tracing): autologging for LangChain and LangGraph
+- [Free Edition limitations](https://docs.databricks.com/aws/en/getting-started/free-edition-limitations): why Claude and Gemini weren't available in my run
+- [Databricks and Anthropic partnership announcement](https://www.databricks.com/company/newsroom/press-releases/databricks-and-anthropic-sign-landmark-deal-bring-claude-models) and [Claude on Databricks](https://www.databricks.com/blog/anthropic-claude-37-sonnet-now-natively-available-databricks): background on running Claude natively with Unity Catalog governance
 
 ## Stack
 
