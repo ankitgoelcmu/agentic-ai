@@ -1,5 +1,7 @@
 # vLLM Inference Lab: what the optimizations actually buy you
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ankitgoelcmu/agentic-ai/blob/main/examples/vllm_inference_lab/vllm_inference_lab.ipynb)
+
 Hands-on results from running vLLM's serving optimizations on one Colab L4 GPU, with `Qwen/Qwen2.5-1.5B-Instruct`. Each section below has what I expected going in, and what the numbers actually showed.
 
 ## 1. Continuous batching
@@ -17,6 +19,8 @@ Hands-on results from running vLLM's serving optimizations on one Colab L4 GPU, 
 | vLLM (continuous batching) | 64 | 3483.6 |
 
 vLLM was already ~3.5x faster than plain HF `generate()` at concurrency 1, and stayed roughly 3x ahead as load went up. It also kept scaling cleanly out to 64 concurrent requests, well past where the HF baseline was tested.
+
+![Continuous batching: throughput vs. concurrency](results/continuous_batching.png)
 
 ## 2. PagedAttention and the KV cache
 
@@ -42,6 +46,8 @@ Matches the plan: more memory given to vLLM means more concurrent requests fit, 
 
 This was the single biggest win in the whole lab: 3x the throughput, and time-to-first-token dropped 9x. For anything agent-shaped — same instructions sent over and over — this is close to a free upgrade.
 
+![Prefix caching: time to first token](results/prefix_caching.png)
+
 ## 4. Speculative decoding
 
 **Idea:** guess several tokens ahead cheaply, then verify them all in one pass with the real model. Correct guesses mean multiple tokens per step instead of one.
@@ -53,7 +59,11 @@ This was the single biggest win in the whole lab: 3x the throughput, and time-to
 | OFF | 32 | 1812.2 | 11.99 s |
 | ON (n-gram) | 32 | 3632.9 | 5.96 s |
 
-At concurrency 1, speculation helped a lot, as expected — 3.4x throughput, latency cut to a quarter. **The surprise:** my notes going in predicted the gains would fade or reverse at high concurrency, since the GPU is already busy. That didn't happen here — at concurrency 32, speculative decoding still roughly doubled throughput and roughly halved latency. Worth digging into why (n-gram speculation is cheap enough that it may not cost much GPU time even when the GPU is saturated), but on this run it helped at both ends.
+At concurrency 1, speculation helped a lot, as expected — 3.4x throughput, latency cut to a quarter. **The surprise:** my notes going in predicted the gains would fade or reverse at high concurrency, since the GPU is already busy. That didn't happen here — at concurrency 32, speculative decoding still roughly doubled throughput and roughly halved latency.
+
+Section 1 showed throughput still climbing at 64 requests, so at 32 the GPU still had spare compute to verify guesses, and the copy-heavy task meant most guesses were accepted. I'd expect the gain to shrink at higher load or on less predictable output.
+
+![Speculative decoding: throughput and latency](results/speculative.png)
 
 ## 5. Quantization: FP16 vs FP8
 
@@ -64,13 +74,15 @@ At concurrency 1, speculation helped a lot, as expected — 3.4x throughput, lat
 | FP16 | 1987.1 | 150 ms | 213 ms | 3.19 s | 16.54 GiB | 18.9 |
 | FP8 | 2572.9 | 350 ms | 582 ms | 2.47 s | 17.34 GiB | 19.81 |
 
-Throughput and overall latency both improved with FP8, as expected. **The surprise:** time-to-first-token got noticeably worse (150ms → 350ms p50). Overall latency still came out ahead because generation sped up enough to make up for it, but the first-token delay is a real trade-off worth knowing about before assuming FP8 is a free win — especially for anything latency-sensitive on the first token, like a streaming chat UI.
+Throughput and overall latency both improved with FP8, as expected, and the KV cache grew — though only about 5% on a model this small (16.54 → 17.34 GiB), not the roughly 2x you'd expect from halving weight size alone. **The surprise:** time-to-first-token got noticeably worse (150ms → 350ms p50). Overall latency still came out ahead because generation sped up enough to make up for it, but the first-token delay is a real trade-off worth knowing about before assuming FP8 is a free win — especially for anything latency-sensitive on the first token, like a streaming chat UI. No warm-up request was run before timing this, so part of the TTFT gap may be first-request overhead rather than the precision itself; worth re-running with a warm-up to isolate it.
+
+![Quantization: FP16 vs FP8](results/quantization.png)
 
 ## Takeaways
 
 - **Continuous batching** is why one GPU serves many users well: throughput keeps climbing with concurrency instead of flattening out.
 - **Prefix caching** is the easiest, biggest win here, and it's aimed squarely at agent workloads.
-- **Speculative decoding** helped at both low and high concurrency in this run, not just low load as the plan assumed.
-- **FP8 quantization** bought throughput and memory, but cost something on time-to-first-token. Check both numbers, not just throughput, before switching.
+- **Speculative decoding** helped at both low and high concurrency in this run, not just low load as the plan assumed — likely because the GPU wasn't saturated yet at 32 requests and the copy-heavy task kept guesses accurate.
+- **FP8 quantization** bought throughput and a modest KV cache bump, but cost something on time-to-first-token (measured without a warm-up request). Check both numbers, not just throughput, before switching.
 
 Model: Qwen2.5-1.5B-Instruct on one Colab L4. Absolute numbers will differ on a bigger model or different GPU, but the shape of each result should hold.
