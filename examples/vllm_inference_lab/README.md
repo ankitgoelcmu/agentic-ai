@@ -20,13 +20,15 @@ Hands-on results from running vLLM's serving optimizations on one Colab L4 GPU, 
 
 vLLM was already about 3.5x faster than plain HF `generate()` at concurrency 1, and stayed roughly 3x ahead as load went up. It also kept scaling cleanly out to 64 concurrent requests, well past where the HF baseline was tested.
 
+One caveat: every request here generated exactly 200 tokens, which is the best case for static batching, since nothing finishes early and sits waiting. Real traffic has mixed response lengths, and that's exactly what continuous batching is built for, so vLLM's real-world lead is likely bigger than this test shows.
+
 ![Continuous batching: throughput vs. concurrency](results/continuous_batching.png)
 
 ## 2. PagedAttention and the KV cache
 
 **Idea:** the KV cache holds the keys and values for every token generated so far. Old servers reserved one big fixed chunk per request. PagedAttention pages it instead, so memory isn't wasted on requests that end early.
 
-| GPU memory util | Max model len | KV cache size | Max concurrent requests |
+| GPU memory util | Max model len | KV cache size | Max concurrent requests (at full context length) |
 |---|---|---|---|
 | 0.5 | 2048 | 6.55 GiB | 119.8 |
 | 0.5 | 8192 | 6.55 GiB | 29.9 |
@@ -34,6 +36,8 @@ vLLM was already about 3.5x faster than plain HF `generate()` at concurrency 1, 
 | 0.9 | 8192 | 16.1 GiB | 73.6 |
 
 This matches the plan. Give vLLM more memory and more concurrent requests fit. Allow longer contexts and fewer requests fit for the same memory. Cost per token stayed flat at 28.7 KB no matter the settings. That's a property of the model, not something these flags change.
+
+The last column is a worst case, not a typical limit. It's how many requests fit if every single one uses the full context length. Most real requests are shorter than that, so actual concurrency in practice is usually much higher.
 
 ## 3. Prefix caching
 
@@ -45,6 +49,8 @@ This matches the plan. Give vLLM more memory and more concurrent requests fit. A
 | ON | 496.0 | 73 ms | 108 ms | 0.79 s |
 
 This was the single biggest win in the whole lab. Throughput tripled, and time to first token dropped 9x. For anything agent-shaped, where the same instructions get sent over and over, this is close to a free upgrade.
+
+One caveat: prefix caching only helps when the prefix is byte-for-byte identical, so it works best when you put stable content (system prompt, tool definitions) first and anything that changes request to request last. This test used a single shared prompt across all requests, which is the best case. Mixed or reordered prefixes would see a smaller win.
 
 ![Prefix caching: time to first token](results/prefix_caching.png)
 
