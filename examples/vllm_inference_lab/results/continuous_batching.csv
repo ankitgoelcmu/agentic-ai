@@ -1,0 +1,8 @@
+engine,concurrency,output_tok_per_s,requests,ttft_p50_ms,ttft_p95_ms,latency_p50_s
+HF generate (static batch),1,19.3,,,,
+HF generate (static batch),8,189.8,,,,
+HF generate (static batch),32,736.5,,,,
+vLLM (continuous batching),1,68.9,8.0,25.0,26.0,2.7
+vLLM (continuous batching),8,574.1,16.0,57.0,67.0,2.78
+vLLM (continuous batching),32,1979.1,64.0,131.0,153.0,3.22
+vLLM (continuous batching),64,3483.6,128.0,212.0,271.0,3.64

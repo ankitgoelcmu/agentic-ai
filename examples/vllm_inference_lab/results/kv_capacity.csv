@@ -1,0 +1,5 @@
+gpu_memory_utilization,max_model_len,kv_cache_gib,kv_cache_tokens,max_concurrency_at_full_length,kb_per_token
+0.5,2048,6.55,245296,119.77,28.7
+0.5,8192,6.55,245296,29.94,28.7
+0.9,2048,16.1,602864,294.37,28.7
+0.9,8192,16.1,602864,73.59,28.7

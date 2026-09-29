@@ -1,0 +1,3 @@
+setting,concurrency,requests,output_tok_per_s,ttft_p50_ms,ttft_p95_ms,latency_p50_s
+prefix caching OFF,8,32,167.1,670,1335,2.37
+prefix caching ON,8,32,496.0,73,108,0.79

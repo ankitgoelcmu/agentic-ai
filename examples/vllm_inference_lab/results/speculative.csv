@@ -1,0 +1,5 @@
+setting,concurrency,requests,output_tok_per_s,ttft_p50_ms,ttft_p95_ms,latency_p50_s
+speculation OFF,1,8,74.1,54,55,9.19
+speculation OFF,32,64,1812.2,152,292,11.99
+speculation ON (n-gram),1,8,251.5,47,48,2.48
+speculation ON (n-gram),32,64,3632.9,149,303,5.96
