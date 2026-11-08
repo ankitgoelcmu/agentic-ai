@@ -27,6 +27,7 @@ Complete, production-ready examples:
 
 - **`sigma_rule_writer/`** - Detection rule generation agent for threat detection
 - **`async_security_checks/`** - The parallel security checks rebuilt on Deep Agents async subagents: a supervisor that stays available while checks run in the background, with a test harness for notifications, human approval, updates and cancel
+- **`async_travel_booking/`** - Flight + hotel booking on Deep Agents async subagents: the supervisor keeps talking while bookings run, and the traveler can change cities or dates mid-booking. Includes a test harness
 - More examples coming...
 
 ### `shared/` - Reusable Utilities
