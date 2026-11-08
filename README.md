@@ -26,6 +26,7 @@ Each pattern includes:
 Complete, production-ready examples:
 
 - **`sigma_rule_writer/`** - Detection rule generation agent for threat detection
+- **`async_security_checks/`** - The parallel security checks rebuilt on Deep Agents async subagents: a supervisor that stays available while checks run in the background, with a test harness for notifications, human approval, updates and cancel
 - More examples coming...
 
 ### `shared/` - Reusable Utilities
