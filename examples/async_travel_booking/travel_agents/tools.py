@@ -68,6 +68,8 @@ async def search_flights(origin: str, destination: str, depart_date: str, return
     """
     if error := _check_dates(depart_date, return_date):
         return error
+    # Fakes a slow real API so you can change the trip mid-search.
+    # Remove it in real code; the actual API call is the slow part.
     await asyncio.sleep(float(os.getenv("FLIGHT_SEARCH_SECONDS", 30)))
     lines = [f"Round trip {origin} -> {destination}, out {depart_date}, back {return_date}:"]
     for i, airline in enumerate(["Pacific Air", "Bluebird", "Northstar"], start=1):
@@ -125,6 +127,8 @@ async def search_hotels(city: str, check_in: str, check_out: str) -> str:
     """
     if error := _check_dates(check_in, check_out):
         return error
+    # Fakes a slow real API so you can change the trip mid-search.
+    # Remove it in real code; the actual API call is the slow part.
     await asyncio.sleep(float(os.getenv("HOTEL_SEARCH_SECONDS", 20)))
     nights = (date.fromisoformat(check_out) - date.fromisoformat(check_in)).days
     lines = [f"Hotels in {city}, {check_in} to {check_out} ({nights} nights):"]
