@@ -42,3 +42,7 @@ All three checks run in parallel against the same input, then results are combin
 ## Reference
 
 This pattern is based on [Anthropic's "Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents) blog post on parallelization strategies.
+
+## Going async
+
+This graph blocks until the slowest check returns. [`examples/async_security_checks`](../../examples/async_security_checks) runs the same three checks as Deep Agents async subagents, so a supervisor can answer the user while they run, change or cancel a check mid-run, and wait for a human approval without blocking.
