@@ -45,4 +45,4 @@ This pattern is based on [Anthropic's "Building Effective Agents"](https://www.a
 
 ## Going async
 
-This graph blocks until the slowest check returns. [`examples/async_minimal`](../../examples/async_minimal) shows the async alternative: Deep Agents async subagents, where a supervisor starts work in the background, keeps answering the user, and can change a task mid-run.
+This graph blocks until the slowest check returns. [`examples/async_agent`](../../examples/async_agent) shows the async alternative: Deep Agents async subagents, where a supervisor starts work in the background, keeps answering the user, and can change a task mid-run.

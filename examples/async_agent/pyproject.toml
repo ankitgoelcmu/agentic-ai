@@ -1,5 +1,5 @@
 [project]
-name = "async-minimal"
+name = "async-agent"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = ["deepagents>=0.7.30", "langchain-ollama", "langgraph-cli[inmem]", "langgraph-sdk"]

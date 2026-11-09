@@ -26,7 +26,7 @@ Each pattern includes:
 Complete, production-ready examples:
 
 - **`sigma_rule_writer/`** - Detection rule generation agent for threat detection
-- **`async_minimal/`** - The smallest Deep Agents async subagents example: a supervisor starts a flight search in the background, replies at once, and takes a change of city mid-search
+- **`async_agent/`** - The smallest Deep Agents async subagents example: a supervisor starts a flight search in the background, replies at once, and takes a change of city mid-search
 - More examples coming...
 
 ### `shared/` - Reusable Utilities
