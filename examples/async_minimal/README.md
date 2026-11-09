@@ -15,4 +15,4 @@ You should see:
 
 The `asyncio.sleep(30)` in `search_flights` fakes a slow real API. Without it the search finishes too fast to change it mid-run. In real code, remove it.
 
-Runs on a local Ollama model (`qwen3-coder-next`), so it costs nothing. For a fuller version with a hotel agent, booking approvals and tests, see [async_travel_booking](../async_travel_booking).
+Runs on a local Ollama model (`qwen3-coder-next`), so it costs nothing.
